@@ -1,0 +1,21 @@
+{% extends "jenga/base.html" %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto py-12">
+    <div class="bg-white border border-gray-200 p-8">
+        <h1 class="vintage-font text-2xl mb-6">{% if object %}Edit Craft{% else %}New Craft{% endif %}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="space-y-6">
+                {{ form.as_p }}
+            </div>
+            <div class="mt-8 border-t border-gray-200 pt-6">
+                <button type="submit" 
+                        class="bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors">
+                    Save Craft
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

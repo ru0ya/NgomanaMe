@@ -1,0 +1,41 @@
+{% extends "jenga/base.html" %}
+
+{% block content %}
+<section class="relative h-screen flex items-center justify-center bg-cover bg-center" 
+         style="background-image: url('https://imgur.com/a/XMlzx1e.jpeg');">
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <div class="relative z-10 text-center text-white">
+        <h1 class="vintage-font text-6xl mb-6">The Art of Instrument Crafting</h1>
+        <p class="text-xl mb-8">Preserving traditional techniques in a modern world</p>
+        <a href="{% url 'jenga:tutorial_list' %}" 
+           class="bg-white text-black px-8 py-3 hover:bg-gray-200 transition-colors">
+            Explore Archives
+        </a>
+    </div>
+</section>
+
+<section class="py-16">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="vintage-font text-3xl text-center mb-12">Featured Crafts</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for tutorial in latest_tutorials %}
+            <article class="bg-white shadow-sm border border-gray-200 hover:shadow-lg transition-shadow">
+                <div class="p-6">
+                    <h3 class="vintage-font text-xl mb-2">
+                        <a href="{{ tutorial.get_absolute_url }}" class="hover:text-gray-600">
+                            {{ tutorial.title }}
+                        </a>
+                    </h3>
+                    <p class="text-gray-600 mb-4">{{ tutorial.introduction|truncatewords:20 }}</p>
+                    <div class="text-sm text-gray-500 border-t border-gray-200 pt-3">
+                        <span>{{ tutorial.author.username }}</span> · 
+                        <span>{{ tutorial.created_at|date:"M Y" }}</span>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+

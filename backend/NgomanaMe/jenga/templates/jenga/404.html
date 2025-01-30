@@ -1,0 +1,12 @@
+{% extends "jenga/base.html" %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto py-16 text-center">
+    <h1 class="vintage-font text-4xl mb-4">404 - Forgotten Scroll</h1>
+    <p class="text-xl text-gray-600 mb-8">The craftsmanship you seek remains undiscovered in our archives</p>
+    <a href="{% url 'instruments:home' %}" 
+       class="bg-black text-white px-8 py-3 hover:bg-gray-800 transition-colors">
+        Return to Workshop
+    </a>
+</div>
+{% endblock %}

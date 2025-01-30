@@ -1,0 +1,74 @@
+{% extends "jenga/base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-12">
+    <article class="bg-white border border-gray-200 shadow-sm">
+        <header class="p-8 border-b border-gray-200">
+            <h1 class="vintage-font text-3xl mb-4">{{ tutorial.title }}</h1>
+            <div class="flex justify-between text-sm text-gray-500">
+                <span>By {{ tutorial.author.username }}</span>
+                <span>{{ tutorial.created_at|date:"F j, Y" }}</span>
+            </div>
+        </header>
+
+        <section class="p-8">
+            <div class="mb-8">
+                <h2 class="vintage-font text-xl mb-4">Materials Required</h2>
+                <ul class="list-disc pl-6 space-y-2">
+                    {% for material in tutorial.materials.all %}
+                    <li class="text-gray-700">
+                        {{ material.name }} <span class="text-gray-500">({{ material.quantity }})</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="space-y-8">
+                {% for step in tutorial.steps.all %}
+                <div class="border-l-2 border-gray-200 pl-4">
+                    <h3 class="vintage-font text-lg mb-2">Step {{ step.step_number }}</h3>
+                    <p class="text-gray-700 leading-relaxed">{{ step.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="p-8 border-t border-gray-200">
+            <h2 class="vintage-font text-xl mb-6">Discussion</h2>
+            {% if user.is_authenticated %}
+            <form method="post" class="mb-8">
+                {% csrf_token %}
+                <textarea name="content" 
+                          class="w-full p-4 border border-gray-200 focus:outline-none focus:border-gray-400"
+                          rows="3"
+                          placeholder="Share your thoughts..."></textarea>
+                <button type="submit" 
+                        class="mt-4 bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors">
+                    Post Comment
+                </button>
+            </form>
+            {% endif %}
+
+            <div class="space-y-6">
+                {% for comment in tutorial.comments.all %}
+                <div class="border-l-2 border-gray-200 pl-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="font-medium">{{ comment.author.username }}</span>
+                        <span class="text-sm text-gray-500">{{ comment.created_at|timesince }} ago</span>
+                    </div>
+                    <p class="text-gray-700">{{ comment.content }}</p>
+                    {% if comment.author == user %}
+                    <div class="mt-2 space-x-2">
+                        <a href="{% url 'jenga:comment_update' comment.pk %}" 
+                           class="text-sm text-gray-500 hover:text-gray-700">Edit</a>
+                        <a href="{% url 'jenga:comment_delete' comment.pk %}" 
+                           class="text-sm text-gray-500 hover:text-gray-700">Delete</a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </article>
+</div>
+{% endblock %}

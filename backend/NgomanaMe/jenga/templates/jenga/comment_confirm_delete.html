@@ -1,0 +1,21 @@
+{% extends "jenga/base.html" %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto py-12">
+    <div class="bg-white border border-gray-200 p-8 text-center">
+        <h1 class="vintage-font text-2xl mb-4">Remove Annotation</h1>
+        <p class="mb-8 text-gray-600">Are you certain you wish to permanently remove this contribution?</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="flex justify-center space-x-4">
+                <a href="{{ object.tutorial.get_absolute_url }}" 
+                   class="px-6 py-2 border border-gray-200 hover:border-gray-400">Cancel</a>
+                <button type="submit" 
+                        class="bg-black text-white px-6 py-2 hover:bg-gray-800 transition-colors">
+                    Confirm Removal
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

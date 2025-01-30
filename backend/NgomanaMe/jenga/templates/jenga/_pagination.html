@@ -1,0 +1,19 @@
+<div class="flex space-x-2">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" 
+       class="px-4 py-2 border border-gray-200 hover:border-gray-400">
+        &laquo;
+    </a>
+    {% endif %}
+
+    <span class="px-4 py-2 border border-gray-200">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" 
+       class="px-4 py-2 border border-gray-200 hover:border-gray-400">
+        &raquo;
+    </a>
+    {% endif %}
+</div>

@@ -1,0 +1,32 @@
+{% extends "jenga/base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto py-12">
+    <h1 class="vintage-font text-4xl mb-8 text-center">
+        {% if category %}{{ category.name }}{% else %}All Crafts{% endif %}
+    </h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for tutorial in page_obj %}
+        <article class="bg-white border border-gray-200 hover:shadow-lg transition-shadow">
+            <div class="p-6">
+                <h2 class="vintage-font text-xl mb-2">
+                    <a href="{{ tutorial.get_absolute_url }}" class="hover:text-gray-600">
+                        {{ tutorial.title }}
+                    </a>
+                </h2>
+                <p class="text-gray-600 mb-4">{{ tutorial.introduction|truncatewords:15 }}</p>
+                <div class="text-sm text-gray-500 border-t border-gray-200 pt-3">
+                    <span>{{ tutorial.difficulty_level|title }}</span> · 
+                    <span>{{ tutorial.estimated_time }}min</span>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    <div class="mt-12 flex justify-center border-t border-gray-200 pt-8">
+        {% include 'jenga/_pagination.html' %}
+    </div>
+</div>
+{% endblock %}
+
